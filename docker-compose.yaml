@@ -1,0 +1,59 @@
+version: "3"
+
+services:
+  szallashu-test:
+    build:
+      context: docker/images/web
+    container_name: szallashu-test
+    hostname: szallashu-test
+    restart: unless-stopped
+    ports:
+      - "8018:80"
+    env_file:
+      - .env
+    environment:
+      - CONTAINER_UID=${DOCKER_MAPPING_UID}
+      - APPLICATION_UID=${DOCKER_MAPPING_UID}
+      - APPLICATION_GID=${DOCKER_MAPPING_GID}
+      - APPLICATION_PATH=/app
+      - WEB_DOCUMENT_ROOT=/app/public
+    working_dir: /app
+    user: application
+    volumes:
+      - ./:/app
+    networks:
+      test:
+        ipv4_address: 172.30.10.8
+        aliases:
+          - szallashu-test
+
+  szallashu-db:
+    image: linuxserver/mariadb:10.6.12
+    container_name: szallashu-db
+    hostname: szallashu-db
+    restart: unless-stopped
+    ports:
+      - "3328:3306"
+    env_file:
+      - .env
+    environment:
+      - PUID=${DOCKER_MAPPING_UID}
+      - PGID=${DOCKER_MAPPING_GID}
+      - MYSQL_ROOT_PASSWORD=${DOCKER_DB_MYSQL_ROOT_PASSWORD}
+      - TZ=${DOCKER_DB_TZ}
+      - MYSQL_DATABASE=${DOCKER_DB_MYSQL_DATABASE}
+      - MYSQL_USER=${DOCKER_DB_MYSQL_USER}
+      - MYSQL_PASSWORD=${DOCKER_DB_MYSQL_PASSWORD}
+    volumes:
+      - ./docker/images/db/init/:/config/initdb.d/
+      - ./docker/images/db/custom.cnf:/config/custom.cnf
+      - ./docker/volumes/db/data:/config
+    networks:
+      test:
+        ipv4_address: 172.30.20.8
+        aliases:
+          - szallashu-db
+
+networks:
+  test:
+    external: true
