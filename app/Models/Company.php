@@ -18,4 +18,22 @@ class Company extends Model
      * @var string
      */
     protected $primaryKey = 'companyId';
+
+    protected $fillable = [
+        'companyName',
+        'companyRegistrationNumber',
+        'companyFoundationDate',
+        'country',
+        'zipCode',
+        'city',
+        'streetAddress',
+        'latitude',
+        'longitude',
+        'companyOwner',
+        'employees',
+        'activity',
+        'active',
+        'email',
+        'password',
+    ];
 }
