@@ -34,13 +34,18 @@ class CompanySchema extends Schema
             ID::make('companyId'),
             Str::make('companyName', 'companyName'),
             Str::make('companyRegistrationNumber', 'companyRegistrationNumber'),
-            DateTime::make('companyFoundationDate', 'companyFoundationDate'),
+            DateTime::make('companyFoundationDate', 'companyFoundationDate')
+                ->deserializeUsing(fn ($value) => str_replace('.', '-', $value))
+                ->fillUsing(function ($model, $column, \DateTimeInterface $value, $validatedData) {
+                    $model->fill([$column => $value->format('Y.m.d')]);
+                }),
+
             Str::make('country'),
             Str::make('zipCode', 'zipCode'),
             Str::make('city'),
             Str::make('streetAddress', 'streetAddress'),
-            Number::make('latitude'),
-            Number::make('longitude'),
+            Number::make('latitude')->acceptStrings(),
+            Number::make('longitude')->acceptStrings(),
             Str::make('companyOwner', 'companyOwner'),
             Number::make('employees'),
             Str::make('activity'),

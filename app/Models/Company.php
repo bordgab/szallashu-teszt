@@ -14,6 +14,8 @@ class Company extends Model
      */
     protected $table = 'companies';
 
+    public $timestamps = false;
+
     /**
      * @var string
      */
