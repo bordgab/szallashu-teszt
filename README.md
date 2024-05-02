@@ -7,11 +7,11 @@
 ## Docker konténerek
 
 - Webszerver
-  - port: 8018
+  - port: 8080
 
 
 - Adatbázis
-    - port: 3328
+    - port: 3316
     - user: root
     - jelszó: nincs
 

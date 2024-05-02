@@ -8,7 +8,7 @@ services:
     hostname: szallashu-test
     restart: unless-stopped
     ports:
-      - "8018:80"
+      - "8080:80"
     env_file:
       - .env
     environment:
@@ -33,7 +33,7 @@ services:
     hostname: szallashu-db
     restart: unless-stopped
     ports:
-      - "3328:3306"
+      - "3316:3306"
     env_file:
       - .env
     environment:
