@@ -28,7 +28,7 @@ class CreateCompaniesTable extends Migration
             $table->string('companyOwner', 128);
             $table->integer('employees', false,true);
             $table->string('activity', 128);
-            $table->boolean('active');
+            $table->boolean('active')->nullable()->default(0);
             $table->string('email', 255);
             $table->string('password', 255);
         });
