@@ -49,7 +49,8 @@ class CompanySchema extends Schema
             Str::make('companyOwner', 'companyOwner'),
             Number::make('employees'),
             Str::make('activity'),
-            Boolean::make('active'),
+            Boolean::make('active')
+                ->extractUsing(fn ($model, $column, $value) => boolval($value)),
             Str::make('email'),
             Str::make('password'),
         ];
